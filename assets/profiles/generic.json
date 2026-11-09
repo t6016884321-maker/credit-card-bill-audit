@@ -1,0 +1,27 @@
+{
+  "name": "generic",
+  "description": "Heuristic fallback. Infers amount column x-positions by clustering right-aligned numeric tokens. Always inspect profile_suggestion.json and the validation gate before trusting its output.",
+  "date_re": "^\\d{4}[-/]\\d{2}[-/]\\d{2}$",
+  "base_currency": "人民币",
+  "currencies": ["人民币", "美元", "港币", "欧元", "其他货币", "CNY", "USD"],
+  "non_money_units": ["积分", "里程", "分"],
+  "deposit_marker": "存款",
+  "markers": {
+    "txn_all": [],
+    "txn_any": ["交易日期", "入账日期", "交易日", "交易明细", "Transaction Date", "POST DATE"],
+    "summary_any": ["本期账单金额", "上期账单金额", "本期应还", "Previous Balance", "New Balance"],
+    "installment_any": ["分期明细", " instalment", "Installment"],
+    "stop_any": ["温馨提示", "积分", "校验码", "客服电话", "广告", "Important Information", "Customer Service"]
+  },
+  "columns": {},
+  "summary": {
+    "currency_x0_max": 140,
+    "min_amounts": 4,
+    "take_last": 4
+  },
+  "infer_columns": true,
+  "notes": [
+    "Generic parsing is a starting point, not a guarantee. The validation gate will refuse to produce reports if the ledger does not close.",
+    "Prefer running profile_statements.py first, then copying its suggestion into a named profile and calibrating it against 3 sample PDFs from different years."
+  ]
+}

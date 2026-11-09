@@ -1,0 +1,156 @@
+{
+  "version": "1.0",
+  "verified_as_of": "2026-11-09",
+  "jurisdiction": "Mainland China",
+  "disclaimer": "Regulatory references are a research starting point, not legal advice. Re-verify the current effective text on the issuer / regulator website before sending any letter.",
+  "rules": [
+    {
+      "id": "C01", "title": "2017-01-01 后仍收取滞纳金或超限费", "severity": "high",
+      "type": "auto", "detector": "post_2017_late_fee",
+      "law": ["《中国人民银行关于信用卡业务有关事项的通知》(银发〔2016〕111号)", "《商业银行信用卡业务监督管理办法》"],
+      "claim": "refund", "question": "Q01",
+      "note": "111号文自2017-01-01施行，取消滞纳金与超限费，改由发卡机构与持卡人协议约定违约金。若仍按旧名目收取，属于可直接主张退还的强证据。"
+    },
+    {
+      "id": "C02", "title": "违约金是否另签协议、是否充分告知", "severity": "high",
+      "type": "evidence_request", "detector": "penalty_agreement",
+      "law": ["银发〔2016〕111号", "《最高人民法院关于审理银行卡民事纠纷案件若干问题的规定》(法释〔2021〕10号) 第2条"],
+      "claim": "refund", "question": "Q02",
+      "note": "违约金须由双方协议约定，不能仅以官网公告替代；要求银行提供签署版本、生效日期与告知记录。"
+    },
+    {
+      "id": "C03", "title": "年费 / 违约金 / 取现手续费 / 货币兑换费被计入计息基数", "severity": "high",
+      "type": "evidence_request", "detector": "fee_in_interest_base",
+      "law": ["银发〔2016〕111号（服务费用不得计收利息）"],
+      "claim": "refund", "question": "Q03",
+      "note": "须索取逐日计息明细与计息基数构成才能确认；账单本身通常看不出来。"
+    },
+    {
+      "id": "C04", "title": "同一年度重复扣收年费 / 未激活即收费", "severity": "high",
+      "type": "auto", "detector": "duplicate_annual_fee",
+      "law": ["《商业银行信用卡业务监督管理办法》", "《商业银行服务价格管理办法》(2014年第1号令) 第18、19、25、34条"],
+      "claim": "refund", "question": "Q04",
+      "note": "收费须有明确服务内容、须公示、须客户确认；年费减免/积分抵扣是否达标也要一并核对。"
+    },
+    {
+      "id": "C05", "title": "未授权的增值服务费（短信、保险、权益包）", "severity": "high",
+      "type": "auto", "detector": "value_added_fee",
+      "law": ["《银行保险机构消费者权益保护管理办法》(2022年第9号令)", "《消费者权益保护法》第9、10、26条"],
+      "claim": "refund", "question": "Q05",
+      "note": "注意区分：摘要以「(消费)」开头的保险/短信多为刷卡消费，不是银行收费，不能误报。"
+    },
+    {
+      "id": "C06", "title": "2024-07 后仍以「手续费」名义收取分期资金成本", "severity": "medium",
+      "type": "auto", "detector": "fee_naming_after_transition",
+      "law": ["《关于进一步促进信用卡业务规范健康发展的通知》(银保监规〔2022〕13号)"],
+      "claim": "disclosure", "question": "Q06",
+      "note": "过渡期于2024-07届满；须核对的是交易名目，账单注释文字里出现「手续费」三个字不算命中。"
+    },
+    {
+      "id": "C07", "title": "自动分期 / 默认开通，缺少逐笔独立授权", "severity": "high",
+      "type": "auto+evidence", "detector": "auto_instalment",
+      "law": ["银保监规〔2022〕13号（十八）（三十八）", "《民法典》第496、497条", "《消费者权益保护法》第9、26条"],
+      "claim": "refund_or_adjustment", "question": "Q07",
+      "note": "13号文要求事前独立申请、逐笔单独签订合同、以具有法律效力的方式确认；(三十八) 要求6个月内完成系统改造，改造后新增业务应符合规定。账单中的「已绑定…」类表述是事后声明，不是授权。"
+    },
+    {
+      "id": "C08", "title": "分期实际年化利率 / 息费展示是否充分", "severity": "high",
+      "type": "auto+evidence", "detector": "annualized_disclosure",
+      "law": ["银发〔2020〕327号", "银保监规〔2022〕13号（七）（二十一）", "《银行保险机构消费者权益保护管理办法》"],
+      "claim": "disclosure", "question": "Q08",
+      "note": "重要边界：展示义务的位置是协议/合同首页/办理页面/官网，不是月度对账单。账单未出现「年化」是间接证据，不能单独定性违法。用名义费率与 IRR 的差额要求银行出示当年披露页与确认记录。"
+    },
+    {
+      "id": "C09", "title": "透支利率「自主协商确定」是否有协商记录", "severity": "high",
+      "type": "evidence_request", "detector": "rate_negotiation",
+      "law": ["银发〔2020〕327号（取消透支利率上下限，由发卡机构与持卡人自主协商确定）"],
+      "claim": "disclosure", "question": "Q09",
+      "note": "2021-01-01 起适用。老卡原合约常写「按人民银行有关规定执行」，银行往往拿不出逐户协商记录，是很难回答的一问。"
+    },
+    {
+      "id": "C10", "title": "隐含日利率异常 / 全额罚息 / 复利基数", "severity": "high",
+      "type": "auto+evidence", "detector": "implied_high_rate",
+      "law": ["法释〔2021〕10号 第2条", "《商业银行信用卡业务监督管理办法》"],
+      "claim": "adjustment", "question": "Q10",
+      "note": "隐含日利率是粗算（当期利息 ÷ 上期余额 ÷ 天数），只能作为索取逐日计息明细的线索，不能直接认定多收。"
+    },
+    {
+      "id": "C11", "title": "疑似重复交易（同日、同额、同摘要）", "severity": "medium",
+      "type": "auto", "detector": "duplicate_transactions",
+      "law": ["《民法典》第985条不当得利", "《银行业保险业消费投诉处理管理办法》"],
+      "claim": "verification", "question": "Q11",
+      "note": "多数是正常的分期/消费双记，必须调单确认，报告里只能写「待核实」，不得写成已认定的重复扣款。"
+    },
+    {
+      "id": "C12", "title": "无摘要调账 / 单方冲账", "severity": "medium",
+      "type": "auto", "detector": "blank_adjustment",
+      "law": ["《商业银行信用卡业务监督管理办法》", "《消费者权益保护法》第8条知情权"],
+      "claim": "verification", "question": "Q12",
+      "note": "「分期冲帐」是分期成立时冲回原消费的常见记法，不要误报为提前结清。"
+    },
+    {
+      "id": "C13", "title": "授信额度调整的类型、触发原因与通知记录", "severity": "low",
+      "type": "auto+evidence", "detector": "limit_changes",
+      "law": ["《商业银行信用卡业务监督管理办法》第50—52条", "银保监规〔2022〕13号（十三）"],
+      "claim": "disclosure", "question": "Q13",
+      "note": "银行并非绝对无权调额；升降成对的变动往往是临时额度到期恢复，先要求说明类型再谈合规。"
+    },
+    {
+      "id": "C14", "title": "积分抵扣年费 / 积分到期扣减是否有规则与提醒", "severity": "medium",
+      "type": "evidence_request", "detector": "points_redemption",
+      "law": ["《商业银行服务价格管理办法》第18、19条", "《消费者权益保护法》第8条"],
+      "claim": "negotiation", "question": "Q14",
+      "note": "多数银行规定需客户主动申请兑换、且仅抵部分年费，银行通常没有自动全额抵扣义务。可追问历版规则、告知记录、未兑换年度的提醒义务。"
+    },
+    {
+      "id": "C15", "title": "综合息费是否畸高、可否请求司法调减", "severity": "medium",
+      "type": "evidence_request", "detector": "excessive_total_cost",
+      "law": ["法释〔2021〕10号 第2条（息费总额过高可请求调减）"],
+      "claim": "adjustment", "question": "Q15",
+      "note": "司法实践常参照综合年化 24% 而非民间借贷 LPR 四倍；调减是裁量，不是当然退还。"
+    },
+    {
+      "id": "C16", "title": "索取办卡原始申请材料、领用合约与历版资费公示", "severity": "high",
+      "type": "evidence_request", "detector": "original_contract",
+      "law": ["《商业银行信用卡业务监督管理办法》第35、37、60、67条", "银保监规〔2022〕13号（七）（八）", "《银行业保险业消费投诉处理管理办法》第13条"],
+      "claim": "disclosure", "question": "Q16",
+      "note": "13号文要求保存签署材料至业务存续期结束后至少5年；投诉办法第13条末句明确：银行已掌握或可从内部档案获取的材料，不得要求投诉人提供。「年代久远/系统无记录」不是有效抗辩。"
+    },
+    {
+      "id": "C17", "title": "开具历史年费 / 利息 / 手续费发票", "severity": "high",
+      "type": "evidence_request", "detector": "invoice",
+      "law": ["《消费者权益保护法》第22条", "《中华人民共和国发票管理办法》(2023修订)", "财税〔2016〕36号"],
+      "claim": "invoice", "question": "Q17",
+      "note": "利息按贷款服务、手续费按直接收费金融服务缴纳增值税；个人消费者索要发票时，银行不得以「年代久远／未结清／个人不抵扣」拒绝。拒开可向 12366 反映。"
+    },
+    {
+      "id": "C18", "title": "诉讼时效切分与书面异议固定证据", "severity": "info",
+      "type": "auto", "detector": "statute_split",
+      "law": ["《民法典》第188、195条"],
+      "claim": "procedure", "question": "Q18",
+      "note": "3年普通时效、20年最长保护期。尽早发书面异议函、保留投诉编号与回执；不要找收费「退息代办」中介，不要伪造材料，不要要求删除真实征信记录。"
+    }
+  ],
+  "do_not_cite": [
+    {
+      "claim": "「逾期息费总额不得超过本金」",
+      "why": "该表述只出现在2021年征求意见稿，银保监规〔2022〕13号正式稿已删除。引用会被银行当场驳回并损害可信度。"
+    },
+    {
+      "claim": "《银行卡业务管理办法》(银发〔1999〕17号) 第22、23条关于滞纳金与复利",
+      "why": "该规章已于2025-06-07废止，不能作为现行主张依据（可作为历史费率背景说明）。"
+    },
+    {
+      "claim": "「账单没显示年化利率所以银行违法」",
+      "why": "展示义务指向协议、合同首页、办理页面与官网；月度对账单不是法定展示位置。正确用法是作为间接证据索取当年披露材料。"
+    },
+    {
+      "claim": "「信用卡息费应参照民间借贷 LPR 四倍」",
+      "why": "法释〔2021〕10号未采用该标准，司法调减看综合年化是否过高，实践常参照24%。"
+    },
+    {
+      "claim": "「分期手续费一律可全额退回」",
+      "why": "已充分告知且已实际履行的分期息费通常不可退；可争的是未授权、未披露、计算错误与畸高调减。"
+    }
+  ]
+}

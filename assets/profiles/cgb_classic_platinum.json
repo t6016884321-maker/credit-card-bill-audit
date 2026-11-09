@@ -1,0 +1,41 @@
+{
+  "name": "cgb_classic_platinum",
+  "description": "A platinum-card monthly statement print layout (validated on 192 consecutive monthly PDFs spanning more than a decade, nearly 6,000 transactions). Use as a worked example; column coordinates are PDF-point specific and will differ for other banks.",
+  "date_re": "^\\d{4}/\\d{2}/\\d{2}$",
+  "base_currency": "人民币",
+  "currencies": ["人民币", "美元", "港币", "欧元", "其他货币"],
+  "non_money_units": ["积分", "里程"],
+  "deposit_marker": "存款",
+  "markers": {
+    "txn_all": ["交易日期", "入账日期"],
+    "summary_any": ["本期账单金额情况", "上期账单金额"],
+    "installment_any": ["分期明细", "申请金额"],
+    "stop_any": ["温馨提示", "积分汇总情况", "积分余额", "校验码：", "以上金额单位", "个人总授信", "用卡安全"]
+  },
+  "columns": {
+    "trade_x1": [340, 408],
+    "post_x1": [465, 525],
+    "currency_x0_min": 525,
+    "summary_x0_max": 350,
+    "account": {
+      "card_last4": [0, 100],
+      "current_balance": [100, 190],
+      "min_payment": [190, 270],
+      "due_date": [270, 350],
+      "currency": [350, 420],
+      "deposit": [420, 480],
+      "credit_limit": [480, 10000]
+    }
+  },
+  "summary": {
+    "currency_x0_max": 130,
+    "min_amounts": 4,
+    "take_last": 4
+  },
+  "notes": [
+    "A '积分' (points) row carries a monetary-looking amount but is NOT money; it must be dropped or the running balance is off by tens of thousands.",
+    "USD rows are listed alongside CNY in the reconciliation table; only the base-currency row may enter the ledger.",
+    "'无欠款' is NOT zero — it usually accompanies an overpayment, so the effective balance is negative.",
+    "'分期冲帐' reverses the original purchase when an instalment is created; it is not an early settlement."
+  ]
+}

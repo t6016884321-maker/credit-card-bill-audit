@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# Runtime outputs — these can contain REAL statements and personal data.
+# NEVER commit them. If you need to ship a sample, use synthetic data instead.
+# ---------------------------------------------------------------------------
+audit_out/
+demo_out/
+deliverables/
+bills/
+**/pdf/
+**/eml/
+**/html/
+
+# Raw personal data, exports and generated reports
+*.pdf
+*.eml
+*.csv
+*.xlsx
+*.xls
+*.zip
+*.jsonl
+*.log
+
+# Credentials and local config
+.env
+.env.*
+credentials*
+*_credentials*
+*.key
+*.pem
+*_secret*
+
+# Python / OS
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+.idea/
+.vscode/
+
+# Exception: skill resource files under assets/ and references/ are intentionally
+# versioned. If you ever need to force-add a legitimately synthetic CSV:
+#   git add -f path/to/synthetic.csv
